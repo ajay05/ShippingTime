@@ -38,7 +38,7 @@ def teardown_request(exception):
 
 @app.route('/')
 def root():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 
 @app.route('/add', methods=['POST'])
