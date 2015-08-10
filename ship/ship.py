@@ -36,11 +36,6 @@ def teardown_request(exception):
         db.close()
 
 
-@app.route('/')
-def root():
-    return render_template('index.html')
-
-
 @app.route('/add', methods=['POST'])
 def add_delivery():
     g.db.execute('insert into deliveries (tracking, carrier, '
@@ -49,14 +44,14 @@ def add_delivery():
                   request.form['street_address'], request.form['zipcode']])
     g.db.commit()
     flash('Delivery added')
-    return redirect(url_for('root'))
+    return redirect(url_for('show_deliveries'))
 
 
 @app.route('/')
 def show_deliveries():
-    cur = g.db.execute('select title, text from entries order by id desc')
-    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    cur = g.db.execute('select tracking, carrier, street_address, zipcode from deliveries order by zipcode desc')
+    deliveries = [dict(zipcode=row[0], carrier=row[1]) for row in cur.fetchall()]
+    return render_template('show_deliveries.html', entries=deliveries)
 
 
 if __name__ == '__main__':
