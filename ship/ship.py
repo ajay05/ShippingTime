@@ -36,7 +36,7 @@ def teardown_request(exception):
         db.close()
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/', methods=['POST'])
 def add_delivery():
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
@@ -51,7 +51,7 @@ def add_delivery():
 def show_deliveries():
     cur = g.db.execute('select tracking, carrier, street_address, zipcode from deliveries order by zipcode desc')
     deliveries = [dict(zipcode=row[0], carrier=row[1]) for row in cur.fetchall()]
-    return render_template('show_deliveries.html', entries=deliveries)
+    return render_template('index.html', deliveries=deliveries)
 
 
 if __name__ == '__main__':
