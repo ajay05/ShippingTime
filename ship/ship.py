@@ -51,7 +51,8 @@ def add_delivery():
 def show_deliveries():
     cur = g.db.execute('select tracking, carrier, street_address, zipcode from'
                        ' deliveries order by zipcode desc')
-    deliveries = [dict(zipcode=row[0], carrier=row[1])
+    deliveries = [dict(tracking=row[0], carrier=row[1], street_address=row[2],
+                       zipcode=row[3])
                   for row in cur.fetchall()]
     return render_template('index.html', deliveries=deliveries)
 
