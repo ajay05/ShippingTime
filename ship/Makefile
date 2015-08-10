@@ -2,7 +2,6 @@ build: tmp/ship.db
 	python ship.py
 
 tmp/ship.db:
-	if [ -a tmp/ship.db]
 	mkdir tmp/
 	touch tmp/ship.db
 	cd tmp/
