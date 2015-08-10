@@ -3,7 +3,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
     abort, render_template, flash
 from contextlib import closing
 
-DATABASE = '/tmp/ship.db'
+DATABASE = 'tmp/ship.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
@@ -49,8 +49,10 @@ def add_delivery():
 
 @app.route('/')
 def show_deliveries():
-    cur = g.db.execute('select tracking, carrier, street_address, zipcode from deliveries order by zipcode desc')
-    deliveries = [dict(zipcode=row[0], carrier=row[1]) for row in cur.fetchall()]
+    cur = g.db.execute('select tracking, carrier, street_address, zipcode from'
+                       ' deliveries order by zipcode desc')
+    deliveries = [dict(zipcode=row[0], carrier=row[1])
+                  for row in cur.fetchall()]
     return render_template('index.html', deliveries=deliveries)
 
 
