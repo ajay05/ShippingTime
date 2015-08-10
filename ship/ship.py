@@ -36,7 +36,7 @@ def teardown_request(exception):
         db.close()
 
 
-@app.route('/', methods=['POST'])
+@app.route('/add', methods=['POST'])
 def add_delivery():
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
