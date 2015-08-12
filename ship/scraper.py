@@ -20,6 +20,17 @@ def scrape_usps(tracking, carrier):
     status = status.replace(' ', '')
     time = time.replace(' ', '')
 
+    status = 'delivered' if 'delivered' in status.lower() else 'not delivered'
+    time = time.split(',')
+
+    # separate month from day of month
+    if time[0][-2].isdigit():
+        time[0] = str(time[0][:len(time[0]) - 2]) + ' ' + \
+            str(time[0][len(time[0]) - 2:])
+    else:
+        time[0] = str(time[0][:len(time[0]) - 1]) + ' ' + \
+            str(time[0][len(time[0]) - 1:])
+
     return (status, time)
 
 
@@ -39,6 +50,9 @@ def get_status(tracking, carrier):
 
     Returns shipment's (status, time) as string.
     """
+    assert isinstance(tracking, str), 'convert %r to string' % tracking
+    assert isinstance(carrier, str), 'convert %r to string' % tracking
+
     if carrier == 'UPS':
         return scrape_ups(tracking, carrier)
     elif carrier == 'Fedex':
@@ -51,9 +65,11 @@ def get_status(tracking, carrier):
 
 def main():
     tracking = '9361289877941113340680'
+    tracking2 = '9241992700433300857330'
     carrier = 'USPS'
 
     print(get_status(tracking, carrier))
+    print(get_status(tracking2, carrier))
 
 if __name__ == '__main__':
     main()
