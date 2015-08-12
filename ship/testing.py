@@ -3,6 +3,7 @@ import unittest
 import ship
 import tempfile
 
+
 class shipTestCase(unittest.TestCase):
 
     def setUp(self):

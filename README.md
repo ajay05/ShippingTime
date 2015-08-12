@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Magana/ShippingTime.svg?branch=master)](https://travis-ci.org/Magana/ShippingTime)
+
 ###### Shipping carriers tell you what day your package will arrive, but what if we could tell people what ~~minute~~ their package will arrive?
 
 The goal of this platform is that it will basically run itself after setup. By collecting user inputed data on what time packages arrived at their doorstep, where they live, what shipping carrier was used, and other information, we can build a model to give an accurate predicition of exactly when their shipment should arrive.
