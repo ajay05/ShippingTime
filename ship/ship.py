@@ -56,6 +56,11 @@ def add_delivery():
 
     if carrier == 'other':
         carrier = request.form['other_carrier']
+        try:
+            assert(len(carrier) > 0)
+        except:
+            flash('Please specify your carrier')
+            return render_template('standardform.html')
 
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
