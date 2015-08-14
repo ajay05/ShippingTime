@@ -1,6 +1,5 @@
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, \
-    abort, render_template, flash
+from flask import Flask, request, g, redirect, url_for, render_template, flash
 from contextlib import closing
 
 DATABASE = 'tmp/ship.db'
