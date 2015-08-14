@@ -37,10 +37,26 @@ def teardown_request(exception):
 
 @app.route('/add', methods=['POST'])
 def add_delivery():
+    tracking = request.form['tracking']
+    carrier = request.form['carrier']
+    street_address = request.form['street_address']
+    zipcode = request.form['zipcode']
+
+    try:
+        assert tracking.isdigit()
+    except:
+        flash('Invalid tracking ID')
+        return render_template('index.html')
+
+    try:
+        assert zipcode.isdigit() and len(zipcode) == 5
+    except:
+        flash('Invalid zipcode')
+        return render_template('index.html')
+
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
-                 [request.form['tracking'], request.form['carrier'],
-                  request.form['street_address'], request.form['zipcode']])
+                 [tracking, carrier, street_address, zipcode])
     g.db.commit()
     flash('Delivery added')
     return redirect(url_for('show_deliveries'))
