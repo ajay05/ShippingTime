@@ -9,3 +9,6 @@ tmp/ship.db: tmp/
 
 tmp/:
 	mkdir tmp/
+
+clean:
+	rm -rf tmp/
