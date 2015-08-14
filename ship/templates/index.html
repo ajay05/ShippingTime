@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <title>Shipping Time</title>
+
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
 <div class=page>
@@ -8,40 +10,7 @@
     {% for message in get_flashed_messages() %}
     <div class=flash>{{ message }}</div>
     {% endfor %}
-
-    <form action="{{ url_for('add_delivery') }}" method=post class=add-delivery>
-        <dl>
-            <dt>Tracking Number:
-            <dd><input type=text size=25 name=tracking>
-            <dt>Carrier:
-            <dd><select name=carrier>
-                <option value="UPS">UPS</option>
-                <option value="Fedex">Fedex</option>
-                <option value="USPS">USPS</option>
-                <option value="other">other</option>
-                </select>
-            <dt>Street Address:
-            <dd><input type=text size=50 name=street_address>
-            <dt>Zipcode:
-            <dd><input type=text size=5 name=zipcode>
-            <dd><input type=submit value=Add>
-        </dl>
-    </form>
-
-    <table style="width:100%">
-    <tr>
-        <td><b>Tracking ID</b></td>
-        <td><b>Carrier</b></td>
-        <td><b>Street Address</b></td>
-        <td><b>Zipcode</b></td>
-    </tr>
-    {% for delivery in deliveries %}
-        <tr>
-            <td>{{ delivery.tracking }}</td>
-            <td>{{ delivery.carrier }}</td>
-            <td>{{ delivery.street_address }}</td>
-            <td>{{ delivery.zipcode }}</td>
-        </tr>
-    {% endfor %}
-    </table>
+    {% block body %}{% endblock %}
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>

@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block body %}
+    <form action="{{ url_for('add_delivery') }}" method=post class=add-delivery>
+        <dl>
+            <dt>Tracking Number:
+            <dd><input type=text size=25 name=tracking>
+            <dt>Carrier:
+            <dd><select onchange="toggleOther(this)" name=carrier>
+                <option value="UPS">UPS</option>
+                <option value="Fedex">Fedex</option>
+                <option value="USPS">USPS</option>
+                <option value="other">other</option>
+                </select>
+            <dt class=other_carrier>Please specify:
+            <dd class=other_carrier><input type=text size=50 name=other_carrier>
+            <dt>Street Address:
+            <dd><input type=text size=50 name=street_address>
+            <dt>Zipcode:
+            <dd><input type=text size=5 name=zipcode>
+            <dd><input type=submit value=Add>
+        </dl>
+    </form>
+
+    <table style="width:100%">
+    <tr>
+        <td><b>Tracking ID</b></td>
+        <td><b>Carrier</b></td>
+        <td><b>Street Address</b></td>
+        <td><b>Zipcode</b></td>
+    </tr>
+    {% for delivery in deliveries %}
+        <tr>
+            <td>{{ delivery.tracking }}</td>
+            <td>{{ delivery.carrier }}</td>
+            <td>{{ delivery.street_address }}</td>
+            <td>{{ delivery.zipcode }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -46,19 +46,23 @@ def add_delivery():
         assert tracking.isdigit()
     except:
         flash('Invalid tracking ID')
-        return render_template('index.html')
+        return render_template('standardform.html')
 
     try:
         assert zipcode.isdigit() and len(zipcode) == 5
     except:
         flash('Invalid zipcode')
-        return render_template('index.html')
+        return render_template('standardform.html')
+
+    if carrier == 'other':
+        carrier = request.form['other_carrier']
 
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
                  [tracking, carrier, street_address, zipcode])
     g.db.commit()
     flash('Delivery added')
+
     return redirect(url_for('show_deliveries'))
 
 
@@ -69,7 +73,8 @@ def show_deliveries():
     deliveries = [dict(tracking=row[0], carrier=row[1], street_address=row[2],
                        zipcode=row[3])
                   for row in cur.fetchall()]
-    return render_template('index.html', deliveries=deliveries)
+
+    return render_template('standardform.html', deliveries=deliveries)
 
 
 if __name__ == '__main__':
