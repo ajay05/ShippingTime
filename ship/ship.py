@@ -42,25 +42,15 @@ def add_delivery():
     street_address = request.form['street_address']
     zipcode = request.form['zipcode']
 
-    try:
-        assert tracking.isdigit()
-    except:
-        flash('Invalid tracking ID')
-        return render_template('standardform.html')
-
-    try:
-        assert zipcode.isdigit() and len(zipcode) == 5
-    except:
-        flash('Invalid zipcode')
-        return render_template('standardform.html')
-
     if carrier == 'other':
         carrier = request.form['other_carrier']
-        try:
-            assert(len(carrier) > 0)
-        except:
-            flash('Please specify your carrier')
-            return render_template('standardform.html')
+
+    validEntries = assertValidEntries(tracking, street_address,
+                                      zipcode, carrier)
+
+    if validEntries is not True:
+        flash('Invalid ' + str(validEntries))
+        return render_template('standardform.html')
 
     g.db.execute('insert into deliveries (tracking, carrier, '
                  'street_address, zipcode) values (?, ?, ?, ?)',
@@ -69,6 +59,33 @@ def add_delivery():
     flash('Delivery added')
 
     return redirect(url_for('show_deliveries'))
+
+
+def assertValidEntries(tid, sa, zipc, car):
+    result = True
+
+    if not len(tid) > 0:
+        result = 'tracking ID'
+
+    if not len(sa) > 0:
+        if result is not True:
+            result += ', street address'
+        else:
+            result = 'street address'
+
+    if not zipc.isdigit() or len(zipc) != 5:
+        if result is not True:
+            result += ', zipcode'
+        else:
+            result = 'zipcode'
+
+    if not len(car) > 0:
+        if result is not True:
+            result += ', carrier'
+        else:
+            result = 'carrier'
+
+    return result
 
 
 @app.route('/')
