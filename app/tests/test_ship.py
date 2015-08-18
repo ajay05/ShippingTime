@@ -1,7 +1,7 @@
 import os
 import unittest
 import sys
-sys.path.append('../ship')
+sys.path.append('../')
 import ship
 import tempfile
 
