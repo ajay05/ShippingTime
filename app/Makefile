@@ -3,12 +3,13 @@ build: tmp/ship.db
 
 tmp/ship.db: tmp/
 	touch tmp/ship.db
-	cd tmp/
 	python -c "from ship import init_db; init_db()"
-	cd ../
 
 tmp/:
 	mkdir tmp/
 
 clean:
 	rm -rf tmp/
+
+test:
+	cd tests/; python _run_all_tests.py
