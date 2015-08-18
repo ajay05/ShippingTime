@@ -45,7 +45,7 @@ def add_delivery():
     if carrier == 'other':
         carrier = request.form['other_carrier']
 
-    validEntries = assertValidEntries(tracking, street_address,
+    validEntries = assert_valid_entries(tracking, street_address,
                                       zipcode, carrier)
 
     if validEntries is not True:
@@ -61,7 +61,7 @@ def add_delivery():
     return redirect(url_for('show_deliveries'))
 
 
-def assertValidEntries(tid, sa, zipc, car):
+def assert_valid_entries(tid, sa, zipc, car):
     result = True
 
     if not len(tid) > 0:
