@@ -5,4 +5,4 @@ python:
 install:
     - "pip install -r requirements.txt"
 script:
-    python app/tests/_run_all_tests.py
+    cd app/; make test
