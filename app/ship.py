@@ -49,7 +49,7 @@ def add_delivery():
                                       zipcode, carrier)
 
     if validEntries is not True:
-        flash('Invalid ' + str(validEntries))
+        flash('Invalid ' + validEntries)
         return render_template('standardform.html')
 
     g.db.execute('insert into deliveries (tracking, carrier, '
